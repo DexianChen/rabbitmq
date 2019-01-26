@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.exc.rabbitmq.mapper.ConsumerMapper" >
+
+    <resultMap id="consumerMap" type="com.exc.rabbitmq.pojo.MyConsumer" >
+        <id column="CONSUMER_ID" property="consumerId" jdbcType="INTEGER" />
+        <result column="CONSUMER_NAME" property="consumerName" jdbcType="VARCHAR" />
+        <result column="CONSUMER_CLASS" property="consumerClass" jdbcType="VARCHAR" />
+        <result column="QUEUE_NAME" property="queueName" jdbcType="VARCHAR" />
+        <result column="EXCHANGE_NAME" property="exchangeName" jdbcType="VARCHAR" />
+        <result column="ROUTE_KEY" property="routeKey" jdbcType="VARCHAR" />
+        <result column="EXCHANGE_TYPE" property="exchangeType" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="column" >
+        CONSUMER_ID, CONSUMER_NAME, CONSUMER_CLASS, QUEUE_NAME, EXCHANGE_NAME, ROUTE_KEY, EXCHANGE_TYPE, CREATE_TIME
+    </sql>
+
+    <select id="getConsumerList" resultMap="consumerMap" >
+        SELECT
+        <include refid="column" />
+        FROM TB_CONSUMER;
+    </select>
+
+</mapper>
