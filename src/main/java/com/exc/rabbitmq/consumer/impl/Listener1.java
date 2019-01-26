@@ -1,13 +1,14 @@
-package com.exc.rabbitmq.consumer;
+package com.exc.rabbitmq.consumer.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.exc.rabbitmq.consumer.Listener;
 import com.exc.rabbitmq.pojo.Student;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-public class Listener1 implements Listener{
+public class Listener1 implements Listener {
 
     public void handleMessage(Object object) throws IOException, TimeoutException {
         Student jsonString = JSONObject.toJavaObject((JSON) object, Student.class);
