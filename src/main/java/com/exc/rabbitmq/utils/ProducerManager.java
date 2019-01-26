@@ -49,7 +49,7 @@ public class ProducerManager {
     public static void sendMessage(String queueName, String exchangeName, String routeKey, String meaasge) throws IOException {
         //将交换器与队列通过路由键绑定
         channel.queueBind(queueName, exchangeName,  routeKey);
-
+        //发送消息
         channel.basicPublish(exchangeName, routeKey, null, meaasge.getBytes());
         logger.info("发送信息{}成功", meaasge);
     }

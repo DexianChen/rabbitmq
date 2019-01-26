@@ -7,7 +7,7 @@ import com.exc.rabbitmq.pojo.Student;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-public class Listener1 {
+public class Listener1 implements Listener{
 
     public void handleMessage(Object object) throws IOException, TimeoutException {
         Student jsonString = JSONObject.toJavaObject((JSON) object, Student.class);

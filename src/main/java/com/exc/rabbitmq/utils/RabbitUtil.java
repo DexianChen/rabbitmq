@@ -2,6 +2,9 @@ package com.exc.rabbitmq.utils;
 
 import com.rabbitmq.client.ConnectionFactory;
 
+/**
+ * 连接rabbitmq的工具
+ */
 public class RabbitUtil {
     public static ConnectionFactory getConnectionFactory() {
         //创建连接工程，下面给出的是默认的case

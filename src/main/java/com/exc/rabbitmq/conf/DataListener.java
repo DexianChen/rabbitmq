@@ -27,17 +27,13 @@ public class DataListener implements ApplicationContextAware{
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        List<MyProducer> producerList = producerMapper.getProducerList();
         try {
+            //初始化生产者
+            List<MyProducer> producerList = producerMapper.getProducerList();
             ProducerManager.initProducer(producerList);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TimeoutException e) {
-            e.printStackTrace();
-        }
 
-        List<MyConsumer> consumerList = consumerMapper.getConsumerList();
-        try {
+            //初始化消费者
+            List<MyConsumer> consumerList = consumerMapper.getConsumerList();
             ConsumerManager.initConsumer(consumerList);
         } catch (IOException e) {
             e.printStackTrace();

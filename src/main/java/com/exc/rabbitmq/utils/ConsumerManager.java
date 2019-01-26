@@ -46,8 +46,13 @@ public class ConsumerManager {
 
     }
 
+    /**
+     * 初始化消费者
+     * @param myConsumer
+     * @throws IOException
+     * @throws TimeoutException
+     */
     private static void initSingleConsumer(MyConsumer myConsumer) throws IOException, TimeoutException {
-
         Consumer consumer = new DefaultConsumer(channel) {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
@@ -55,19 +60,21 @@ public class ConsumerManager {
                 Method method = null;
                 //处理消息体
                 try {
+                    //利用反射获取消费者对象
                     consumerClass = Class.forName(myConsumer.getConsumerClass());
                     method = consumerClass.getDeclaredMethod("handleMessage", Object.class);
                     method.invoke(consumerClass.newInstance(), JSON.parseObject(new String(body)));
                 } catch (ClassNotFoundException e) {
+                    //如果找不到该消费者，则return而不是抛出异常
                     return;
                 } catch (NoSuchMethodException e) {
                     throw new RuntimeException("找不到类" + consumerClass.getName() + "的" + method.getName() + "方法");
                 } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                    throw new RuntimeException(e.getMessage());
                 } catch (InvocationTargetException e) {
-                    e.printStackTrace();
+                    throw new RuntimeException(e.getMessage());
                 } catch (InstantiationException e) {
-                    e.printStackTrace();
+                    throw new RuntimeException(e.getMessage());
                 }
 
                 try {
