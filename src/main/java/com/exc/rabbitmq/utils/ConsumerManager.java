@@ -38,10 +38,10 @@ public class ConsumerManager {
 
     public static void initConsumer(List<MyConsumer> consumerList) throws IOException, TimeoutException {
 
-        for (MyConsumer consumer : consumerList) {
-            logger.info("开始启动{}消费者", consumer.getConsumerName());
-            initSingleConsumer(consumer);
-            logger.info("启动{}消费者成功", consumer.getConsumerName());
+        for (MyConsumer myConsumer : consumerList) {
+            logger.info("开始启动{}消费者", myConsumer.getConsumerName());
+            initSingleConsumer(myConsumer);
+            logger.info("启动{}消费者成功", myConsumer.getConsumerName());
         }
 
     }
@@ -66,6 +66,7 @@ public class ConsumerManager {
                     method.invoke(consumerClass.newInstance(), JSON.parseObject(new String(body)));
                 } catch (ClassNotFoundException e) {
                     //如果找不到该消费者，则return而不是抛出异常
+                    logger.info("找不到{}对象", myConsumer.getConsumerClass());
                     return;
                 } catch (NoSuchMethodException e) {
                     throw new RuntimeException("找不到类" + consumerClass.getName() + "的" + method.getName() + "方法");
