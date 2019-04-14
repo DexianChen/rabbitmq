@@ -1,4 +1,4 @@
-package com.exc.rabbitmq.mq_enum;
+package com.exc.rabbitmq.constant;
 
 /**
  * 生产者队列数据枚举

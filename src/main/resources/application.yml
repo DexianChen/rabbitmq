@@ -25,3 +25,8 @@ spring:
 mybatis:
   typeAliasesPackage: com.exc.rabbitmq.pojo
   mapperLocations: classpath:com.exc.rabbitmq.mapper/*.xml
+
+management:
+    security:
+# 仅限于 开发环境可对security进行关闭。
+        enabled: false
