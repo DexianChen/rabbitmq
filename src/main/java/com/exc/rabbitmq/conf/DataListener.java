@@ -7,7 +7,8 @@ import com.exc.rabbitmq.pojo.MyProducer;
 import com.exc.rabbitmq.utils.ConsumerManager;
 import com.exc.rabbitmq.utils.ProducerManager;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.beans.BeansException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -20,13 +21,15 @@ import java.util.concurrent.TimeoutException;
 @Service
 @MapperScan(basePackages = {"com.exc.rabbitmq.mapper"})
 public class DataListener implements ApplicationContextAware{
+    private static final Logger logger = LoggerFactory.getLogger(DataListener.class);
+
     @Autowired
     private ProducerMapper producerMapper;
     @Autowired
     private ConsumerMapper consumerMapper;
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(ApplicationContext applicationContext) {
         try {
             //初始化生产者
             List<MyProducer> producerList = producerMapper.getProducerList();
@@ -36,9 +39,9 @@ public class DataListener implements ApplicationContextAware{
             List<MyConsumer> consumerList = consumerMapper.getConsumerList();
             ConsumerManager.initConsumer(consumerList);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("IOException");
         } catch (TimeoutException e) {
-            e.printStackTrace();
+            logger.error("TimeoutException");
         }
     }
 }

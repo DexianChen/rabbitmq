@@ -24,10 +24,13 @@ public class ProducerManager {
             connection = factory.newConnection();
             channel = connection.createChannel();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("IOException");
         } catch (TimeoutException e) {
-            e.printStackTrace();
+            logger.error("TimeoutException");
         }
+    }
+
+    private ProducerManager() {
     }
 
     public static void initProducer(List<MyProducer> producerList) throws IOException, TimeoutException {

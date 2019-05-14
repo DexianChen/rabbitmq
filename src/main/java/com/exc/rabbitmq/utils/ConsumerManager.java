@@ -16,7 +16,6 @@ import java.util.concurrent.TimeoutException;
 public class ConsumerManager {
     private static final Logger logger = LoggerFactory.getLogger(ConsumerManager.class);
 
-    private static Address[] addresses = null;
     private static ConnectionFactory factory = null;
     //创建连接
     private static Connection connection = null;
@@ -30,10 +29,13 @@ public class ConsumerManager {
             channel = connection.createChannel(); //创建信道
             channel.basicQos(64); // 设置客户端最多接收未被 ack 的消息的个数
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("IOException");
         } catch (TimeoutException e) {
-            e.printStackTrace();
+            logger.error("TimeoutException");
         }
+    }
+
+    private ConsumerManager() {
     }
 
     public static void initConsumer(List<MyConsumer> consumerList) throws IOException, TimeoutException {
@@ -69,20 +71,18 @@ public class ConsumerManager {
                     logger.info("找不到{}对象", myConsumer.getConsumerClass());
                     return;
                 } catch (NoSuchMethodException e) {
-                    throw new RuntimeException("找不到类" + consumerClass.getName() + "的" + method.getName() + "方法");
-                } catch (IllegalAccessException e) {
-                    throw new RuntimeException(e.getMessage());
-                } catch (InvocationTargetException e) {
-                    throw new RuntimeException(e.getMessage());
-                } catch (InstantiationException e) {
-                    throw new RuntimeException(e.getMessage());
+                    logger.error("找不到类{}的方法", consumerClass.getName());
+                } catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
+                    logger.error(e.getMessage());
                 }
+
 
                 try {
                     TimeUnit.SECONDS.sleep(1) ;
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                   Thread.currentThread().interrupt();
                 }
+
                 channel.basicAck(envelope.getDeliveryTag(), false);
             }
         };
