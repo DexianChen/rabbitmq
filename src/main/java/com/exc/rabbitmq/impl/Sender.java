@@ -1,4 +1,4 @@
-package com.exc.rabbitmq.rabbitmq;
+package com.exc.rabbitmq.impl;
 
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,6 @@ public class Sender {
     public void send() {
         String context = "hello " + new Date();
         System.out.println("Sender : " + context);
-        this.rabbitTemplate.convertAndSend("hello", context);
+        this.rabbitTemplate.convertAndSend("exchange","routeKey", context);
     }
 }

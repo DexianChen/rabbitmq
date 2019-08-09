@@ -1,6 +1,6 @@
 package com.exc.rabbitmq;
 
-import com.exc.rabbitmq.rabbitmq.Sender;
+import com.exc.rabbitmq.impl.Sender;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
