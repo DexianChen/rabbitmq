@@ -1,27 +1,8 @@
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    status-page-url-path: /swagger-ui.html#!
-
-server:
-  port: 8762
-
 spring:
   application:
-    name: rabbitmq
-
-#默认使用配置
-  profiles:
-    active: dev
-  datasource:
-      url: jdbc:mysql://192.168.153.129:3306/rabbitmq??useUnicode=true&characterEncoding=utf8&autoReconnect=true
-      username: root
-      password: 123456
-      driver-class-name: com.mysql.jdbc.Driver
-
-#公共配置与profiles选择无关
-mybatis:
-  typeAliasesPackage: com.exc.rabbitmq.pojo
-  mapperLocations: classpath:com.exc.rabbitmq.mapper/*.xml
+    name: rabbitmq-hello
+  rabbitmq:
+    host: 192.168.153.129
+    port: 5672
+    username: admin
+    password: admin
